@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Professional Full-Stack Portfolio
 
-## Getting Started
+A premium, state-of-the-art developer portfolio built with **Next.js 15**, **Tailwind CSS**, and **MongoDB**. This project features a completely dynamic backend, enabling real-time updates to projects, experience, and contact messages without needing to redeploy code.
 
-First, run the development server:
+---
 
+## 🔗 Live Demo
+**View the live site here:** [https://lemaiyan-portfolio.vercel.app](https://lemaiyan-portfolio.vercel.app)
+
+---
+
+## ✨ Features
+- **Dynamic Content**: Projects and Work Experience are fetched directly from MongoDB Atlas.
+- **Automated Contacts**: A fully functional contact form that saves messages to your cloud database.
+- **Micro-Animations**: Powered by `Framer Motion` for a premium, interactive user experience.
+- **Modern UI**: Dark-mode first design with a sleek, minimalist aesthetic.
+- **Full-Stack Architecture**: Next.js API routes handling all CRUD operations.
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend**: [Next.js 15+](https://nextjs.org/), React 19, Tailwind CSS
+- **Backend**: Next.js API Routes (Serverless)
+- **Database**: [MongoDB Atlas](https://www.mongodb.com/atlas) (Cloud)
+- **Styling**: Tailwind CSS & Lucide Icons
+- **Animations**: Framer Motion
+
+---
+
+## ⚙️ Environment Variables
+
+To run this project locally or in production, you must set the following environment variables:
+
+| Variable | Description |
+| :--- | :--- |
+| `MONGODB_URI` | Your MongoDB Atlas connection string (with password) |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Parsilanka/lemaiyan-portfolio.git
+cd lemaiyan-portfolio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install --legacy-peer-deps
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run development server
+```bash
+npm run dev
+```
+The site will be available at [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📊 Database Management
 
-To learn more about Next.js, take a look at the following resources:
+This project uses a database named `portfolio`. To add new content, log in to your **MongoDB Atlas** dashboard and update the following collections:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `projects` Collection
+```json
+{
+  "title": "Project Name",
+  "description": "Short summary...",
+  "techStack": ["Next.js", "AI"],
+  "githubUrl": "https://github.com...",
+  "imageUrl": "/images/your-image.png",
+  "featured": true
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### `experience` Collection
+```json
+{
+  "role": "Software Engineer",
+  "company": "Company Name",
+  "startDate": "Jan 2024",
+  "endDate": "Present",
+  "responsibilities": ["Lead dev...", "Built X..."],
+  "order": 1
+}
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📤 Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is optimized for deployment on **Vercel**:
+
+1. Push your code to GitHub.
+2. Connect your GitHub repository to [Vercel](https://vercel.com/).
+3. Add the `MONGODB_URI` environment variable in the Vercel dashboard.
+4. Deployment will happen automatically on every push to the `main` branch.
+
+---
+
+## 📄 License
+Custom Portfolio License. Developed by [Parsilanka](https://github.com/Parsilanka).
