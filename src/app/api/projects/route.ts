@@ -34,7 +34,7 @@ const MOCK_PROJECTS = [
     },
     {
         _id: "4",
-        title: "AgriSmart",
+        title: "AgriSmart App",
         description: "An innovative agricultural management application optimizing farming practices through data-driven insights and technology.",
         techStack: ["Kotlin", "Android", "IoT"],
         githubUrl: "https://github.com/Parsilanka/AgriSmart",

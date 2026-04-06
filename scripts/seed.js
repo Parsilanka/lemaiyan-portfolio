@@ -82,7 +82,7 @@ const projects = [
         featured: true
     },
     {
-        title: "AgriSmart",
+        title: "AgriSmart App",
         description: "An innovative agricultural management application optimizing farming practices through data-driven insights and technology.",
         techStack: ["Kotlin", "Android", "IoT"],
         githubUrl: "https://github.com/Parsilanka/AgriSmart",
