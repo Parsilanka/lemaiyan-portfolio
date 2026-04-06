@@ -117,7 +117,7 @@ const experiences = [
     },
     {
         role: "Industrial Attachment",
-        company: "Vortex Labs",
+        company: "Kenya Methodist University",
         startDate: "May 2026",
         endDate: "Aug 2026",
         responsibilities: [
