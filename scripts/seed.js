@@ -141,22 +141,22 @@ const projects = [
 
 const experiences = [
     {
-        role: "Lead Full-Stack Developer",
-        company: "TechNova Solutions",
-        startDate: "Jan 2024",
+        role: "Machine learning Engineer",
+        company: "Meru University Of Science and Technology",
+        startDate: "Sep 2023",
         endDate: "Present",
         responsibilities: [
-            "Architected and deployed enterprise-level SaaS applications using Next.js and AWS.",
-            "Reduced application load time by 40% through server-side optimizations.",
-            "Mentored junior developers and led the agile development team of 5."
+            "Developed and deployed a crop recommendation system using supervised learning models trained on soil, climate, and regional agricultural data.",
+    "Built a plant disease detection pipeline leveraging CNN-based image classification, achieving 92%+ accuracy on leaf disease datasets.",
+    "Optimized model inference and preprocessing workflows, reducing prediction latency by 40% for real-time field applications.",
         ],
         order: 1
     },
     {
-        role: "Software Engineering Intern",
+        role: "Industrial Attachment",
         company: "Vortex Labs",
-        startDate: "Jun 2023",
-        endDate: "Dec 2023",
+        startDate: "May 2026",
+        endDate: "Aug 2026",
         responsibilities: [
             "Developed responsive UI components using React and Tailwind CSS.",
             "Implemented RESTful API endpoints for internal dashboard services.",
