@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongodb'
 import Project from '@/lib/models/Project'
 
+export const dynamic = 'force-dynamic'
 
 const MOCK_PROJECTS = [
     {
@@ -34,7 +35,7 @@ const MOCK_PROJECTS = [
     {
         _id: "4",
         title: "AgriSmart",
-        description: "An innovative agricultural management application optimizing farming practices through data-driven insights.",
+        description: "An innovative agricultural management application optimizing farming practices through data-driven insights and technology.",
         techStack: ["Kotlin", "Android", "IoT"],
         githubUrl: "https://github.com/Parsilanka/AgriSmart",
         imageUrl: "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=600",
@@ -43,7 +44,7 @@ const MOCK_PROJECTS = [
     {
         _id: "5",
         title: "GraphicsGlu Agency Website",
-        description: "A comprehensive and aesthetically pleasing website for a graphic design agency.",
+        description: "A comprehensive and aesthetically pleasing website for a graphic design agency, showcasing a wide range of visual solutions.",
         techStack: ["HTML", "CSS", "JavaScript", "UI/UX"],
         githubUrl: "https://github.com/Parsilanka/GraphicsGlu-website",
         imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=600",
