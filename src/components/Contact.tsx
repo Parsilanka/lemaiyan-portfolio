@@ -54,7 +54,6 @@ export default function Contact() {
                                 <input
                                     required
                                     type="text"
-                                    placeholder="John Doe"
                                     className="w-full rounded-xl border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -65,7 +64,6 @@ export default function Contact() {
                                 <input
                                     required
                                     type="email"
-                                    placeholder="john@example.com"
                                     className="w-full rounded-xl border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
