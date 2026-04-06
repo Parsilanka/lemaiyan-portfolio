@@ -15,7 +15,7 @@ export default function Hero() {
                     className="relative mx-auto mb-8 h-48 w-48 overflow-hidden rounded-full border-4 border-primary/20 sm:h-64 sm:w-64"
                 >
                     <Image
-                        src="/images/profile.png"
+                        src="/images/profile.jpeg"
                         alt="Parsilanka Samuel Lemaiyan"
                         fill
                         className="object-cover"
