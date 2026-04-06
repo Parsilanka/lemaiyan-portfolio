@@ -97,46 +97,9 @@ const projects = [
         imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=600",
         featured: false
     },
-    {
-        title: "Mental Health Support AI",
-        description: "An AI-powered support system designed to offer mental health resources and interactive guidance for users in need.",
-        techStack: ["AI", "NLP", "Python", "Flask"],
-        githubUrl: "https://github.com/Parsilanka/mental-chatbot",
-        imageUrl: "https://images.unsplash.com/photo-1527137341206-896db8849ad2?auto=format&fit=crop&q=80&w=600",
-        featured: false
-    },
-    {
-        title: "Core Voting Infrastructure",
-        description: "Backend logic and fundamental components for a secure and robust digital voting system architecture.",
-        techStack: ["TypeScript", "Node.js", "MongoDB"],
-        githubUrl: "https://github.com/Parsilanka/voting-system",
-        imageUrl: "https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&q=80&w=600",
-        featured: false
-    },
-    {
-        title: "Mobile App Framework",
-        description: "A versatile and scalable mobile application framework demonstrating standard Kotlin development best practices.",
-        techStack: ["Kotlin", "Android Development"],
-        githubUrl: "https://github.com/Parsilanka/Mobile_App",
-        imageUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=600",
-        featured: false
-    },
-    {
-        title: "Mobile Development Modules",
-        description: "A repository consolidating various experimental mobile app modules and architectural components.",
-        techStack: ["Mobile Development", "Software Design Patterns"],
-        githubUrl: "https://github.com/Parsilanka/Mobile-App-Development",
-        imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=600",
-        featured: false
-    },
-    {
-        title: "Soil-Based Crop Recommendation Engine",
-        description: "A sophisticated predictive model that recommends the most suitable crops based on soil composition and climatic factors.",
-        techStack: ["Python", "Jupyter Notebook", "Scikit-Learn"],
-        githubUrl: "https://github.com/Parsilanka/crop-recommendation-system",
-        imageUrl: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=600",
-        featured: false
-    }
+    
+    
+    
 ];
 
 const experiences = [
