@@ -1,9 +1,39 @@
 const mongoose = require('mongoose');
-const { Schema, model, models } = mongoose;
+const fs = require('fs');
+const path = require('path');
 
-const MONGODB_URI = 'mongodb://localhost:27017/portfolio';
+// Function to find ALL MONGODB_URIs in multiple potential .env files
+function getAllMongoURIs() {
+    const uris = new Set();
+    const envFiles = ['.env.production.local', '.env.local', '.env'];
+    
+    for (const file of envFiles) {
+        const envPath = path.resolve(process.cwd(), file);
+        if (fs.existsSync(envPath)) {
+            const content = fs.readFileSync(envPath, 'utf8');
+            const lines = content.split('\n');
+            for (let line of lines) {
+                line = line.trim();
+                const match = line.match(/^MONGODB_URI=["']?([^"'\s]+)["']?.*$/);
+                if (match && !line.startsWith('#')) {
+                    const uri = match[1];
+                    console.log(`📡 Found MONGODB_URI in ${file}: ${uri.split('@').pop()}`);
+                    uris.add(uri);
+                }
+            }
+        }
+    }
+    
+    // Add localhost as a fallback if nothing found
+    if (uris.size === 0) {
+        console.warn("⚠️ No MONGODB_URI found in .env files, adding localhost fallback.");
+        uris.add('mongodb://localhost:27017/portfolio');
+    }
+    
+    return Array.from(uris);
+}
 
-const ProjectSchema = new Schema({
+const ProjectSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     techStack: [String],
@@ -14,9 +44,7 @@ const ProjectSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-const Project = models.Project || model('Project', ProjectSchema);
-
-const ExperienceSchema = new Schema({
+const ExperienceSchema = new mongoose.Schema({
     role: { type: String, required: true },
     company: { type: String, required: true },
     startDate: String,
@@ -25,95 +53,158 @@ const ExperienceSchema = new Schema({
     order: { type: Number, default: 0 }
 });
 
-const Experience = models.Experience || model('Experience', ExperienceSchema);
+const Project = mongoose.models.Project || mongoose.model('Project', ProjectSchema, 'projects');
+const Experience = mongoose.models.Experience || mongoose.model('Experience', ExperienceSchema, 'experience');
 
-const seedData = async () => {
-    try {
-        await mongoose.connect(MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        // Clear existing data
-        await Project.deleteMany({});
-        await Experience.deleteMany({});
-
-        // Sample Projects
-        const projects = [
-            {
-                title: 'Crop Recommendation & Disease Detection System',
-                description: 'An AI-powered agricultural support system that recommends ideal crops based on soil/environmental parameters and detects 20+ plant diseases using image classification. Improved precision in traditional farming methods through data-driven insights.',
-                techStack: ['Python', 'TensorFlow', 'scikit-learn', 'CNN', 'Random Forest', 'Pandas', 'NumPy'],
-                githubUrl: 'https://github.com/Parsilanka/Crop-Recommendation-and-Disease-Detection-System',
-                liveUrl: '',
-                imageUrl: 'https://placehold.co/600x400?text=AgriAI+System',
-                featured: true
-            },
-            {
-                title: 'AgriSmart Mobile App',
-                description: 'A cross-platform mobile application providing real-time agricultural advice. Integrated machine learning models for on-field disease diagnosis and crop suitability analysis with an intuitive user interface.',
-                techStack: ['Mobile App Dev', 'Machine Learning', 'REST APIs', 'UI/UX'],
-                githubUrl: 'https://github.com/Parsilanka/Mobile-App-Development',
-                liveUrl: '',
-                imageUrl: 'https://placehold.co/600x400?text=AgriSmart+App',
-                featured: true
-            },
-            {
-                title: 'Mental Health AI Chatbot',
-                description: 'A natural language processing based chatbot designed to provide initial mental health support and resources. Leverages advanced text classification to identify user sentiment and provide empathetic responses.',
-                techStack: ['Python', 'NLP', 'TensorFlow', 'Flask'],
-                githubUrl: 'https://github.com/Parsilanka/mental-chatbot',
-                liveUrl: '',
-                imageUrl: 'https://placehold.co/600x400?text=Mental+Health+AI',
-                featured: true
-            },
-            {
-                title: 'Lumina Technologies E-commerce',
-                description: 'A comprehensive full-stack e-commerce solution featuring secure user authentication, dynamic product catalogs, a centralized cart management system, and an optimized checkout flow.',
-                techStack: ['HTML/CSS', 'JavaScript', 'Responsive Design', 'E-commerce'],
-                githubUrl: '',
-                liveUrl: '',
-                imageUrl: 'https://placehold.co/600x400?text=Lumina+E-commerce',
-                featured: false
-            }
-        ];
-
-        // Sample Experience
-        const experiences = [
-            {
-                role: 'Machine Learning Engineer & IT Professional',
-                company: 'Freelance / Projects',
-                startDate: '2023',
-                endDate: 'Present',
-                responsibilities: [
-                    'Architected and deployed end-to-end Machine Learning pipelines, from data collection and preprocessing to model training and performance optimization.',
-                    'Engineered high-accuracy classification models (CNNs & Random Forests) for specialized domains like agriculture and natural language processing.',
-                    'Developed responsive web and mobile interfaces to bridge the gap between complex AI models and end-user accessibility.',
-                    'Collaborated on full-cycle product development including requirements gathering, UI/UX design, and cross-platform deployment.'
-                ],
-                order: 1
-            },
-            {
-                role: 'IT Industrial Intern',
-                company: 'Kenya Methodist University (KeMU)',
-                startDate: '2023',
-                endDate: '2023',
-                responsibilities: [
-                    'Provided comprehensive IT support and systems troubleshooting in a fast-paced university environment.',
-                    'Gained hands-on experience in network administration, hardware maintenance, and user support protocols.',
-                    'Contributed to the optimization of internal IT workflows and local area network stability.'
-                ],
-                order: 2
-            }
-        ];
-
-        await Project.insertMany(projects);
-        await Experience.insertMany(experiences);
-
-        console.log('Database seeded successfully!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding database:', error);
-        process.exit(1);
+const projects = [
+    {
+        title: "Crop Recommendation & Disease Detection",
+        description: "AI-powered crop recommendation and plant disease detection using machine learning and computer vision to help farmers optimize yields.",
+        techStack: ["Python", "TensorFlow", "Jupyter Notebook", "Machine Learning"],
+        githubUrl: "https://github.com/Parsilanka/Crop-Recommendation-and-Disease-Detection-System",
+        imageUrl: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=600",
+        featured: true
+    },
+    {
+        title: "Decentralized Voting System",
+        description: "A secure, transparent, and immutable voting platform built on blockchain technology to ensure election integrity.",
+        techStack: ["TypeScript", "Solidity", "Blockchain", "React"],
+        githubUrl: "https://github.com/Parsilanka/DECENTRALIZED-VOTING-SYSTEM",
+        imageUrl: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&q=80&w=600",
+        featured: true
+    },
+    {
+        title: "Vantage Mobile App",
+        description: "A high-performance mobile application providing seamless user interaction and responsive design for modern mobile platforms.",
+        techStack: ["Kotlin", "Android", "Material UI"],
+        githubUrl: "https://github.com/Parsilanka/Vantage_Mobile-App",
+        imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600",
+        featured: true
+    },
+    {
+        title: "AgriSmart",
+        description: "An innovative agricultural management application optimizing farming practices through data-driven insights and technology.",
+        techStack: ["Kotlin", "Android", "IoT"],
+        githubUrl: "https://github.com/Parsilanka/AgriSmart",
+        imageUrl: "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "GraphicsGlu Agency Website",
+        description: "A comprehensive and aesthetically pleasing website for a graphic design agency, showcasing a wide range of visual solutions.",
+        techStack: ["HTML", "CSS", "JavaScript", "UI/UX"],
+        githubUrl: "https://github.com/Parsilanka/GraphicsGlu-website",
+        imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "Mental Health Support AI",
+        description: "An AI-powered support system designed to offer mental health resources and interactive guidance for users in need.",
+        techStack: ["AI", "NLP", "Python", "Flask"],
+        githubUrl: "https://github.com/Parsilanka/mental-chatbot",
+        imageUrl: "https://images.unsplash.com/photo-1527137341206-896db8849ad2?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "Core Voting Infrastructure",
+        description: "Backend logic and fundamental components for a secure and robust digital voting system architecture.",
+        techStack: ["TypeScript", "Node.js", "MongoDB"],
+        githubUrl: "https://github.com/Parsilanka/voting-system",
+        imageUrl: "https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "Mobile App Framework",
+        description: "A versatile and scalable mobile application framework demonstrating standard Kotlin development best practices.",
+        techStack: ["Kotlin", "Android Development"],
+        githubUrl: "https://github.com/Parsilanka/Mobile_App",
+        imageUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "Mobile Development Modules",
+        description: "A repository consolidating various experimental mobile app modules and architectural components.",
+        techStack: ["Mobile Development", "Software Design Patterns"],
+        githubUrl: "https://github.com/Parsilanka/Mobile-App-Development",
+        imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=600",
+        featured: false
+    },
+    {
+        title: "Soil-Based Crop Recommendation Engine",
+        description: "A sophisticated predictive model that recommends the most suitable crops based on soil composition and climatic factors.",
+        techStack: ["Python", "Jupyter Notebook", "Scikit-Learn"],
+        githubUrl: "https://github.com/Parsilanka/crop-recommendation-system",
+        imageUrl: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=600",
+        featured: false
     }
-};
+];
 
-seedData();
+const experiences = [
+    {
+        role: "Lead Full-Stack Developer",
+        company: "TechNova Solutions",
+        startDate: "Jan 2024",
+        endDate: "Present",
+        responsibilities: [
+            "Architected and deployed enterprise-level SaaS applications using Next.js and AWS.",
+            "Reduced application load time by 40% through server-side optimizations.",
+            "Mentored junior developers and led the agile development team of 5."
+        ],
+        order: 1
+    },
+    {
+        role: "Software Engineering Intern",
+        company: "Vortex Labs",
+        startDate: "Jun 2023",
+        endDate: "Dec 2023",
+        responsibilities: [
+            "Developed responsive UI components using React and Tailwind CSS.",
+            "Implemented RESTful API endpoints for internal dashboard services.",
+            "Improved test coverage by 25% using Jest and React Testing Library."
+        ],
+        order: 2
+    }
+];
+
+async function seed() {
+    const uris = getAllMongoURIs();
+    console.log(`🚀 Starting seeding process for ${uris.length} environment(s)...`);
+
+    for (const uri of uris) {
+        try {
+            const host = uri.split('@').pop().split('/')[0];
+            console.log(`\n🔌 Connecting to: ${host}...`);
+            
+            // Create a new connection for each URI to ensure clean state
+            const conn = await mongoose.connect(uri, { 
+                dbName: 'portfolio',
+                serverSelectionTimeoutMS: 5000 
+            });
+            
+            console.log("✅ Connection Successful!");
+
+            console.log("🧹 Cleaning up existing data...");
+            await Project.deleteMany({});
+            await Experience.deleteMany({});
+
+            console.log("🚀 Seeding Projects...");
+            await Project.insertMany(projects);
+
+            console.log("🚀 Seeding Experiences...");
+            await Experience.insertMany(experiences);
+
+            console.log(`✨ Seed Successful for ${host}!`);
+            
+            // Disconnect to allow next connection
+            await mongoose.disconnect();
+        } catch (err) {
+            console.error(`❌ Seed failed for URI: ${err.message}`);
+            // Continue to next URI even if one fails
+        }
+    }
+    
+    console.log("\n🏁 Seeding process completed.");
+    process.exit(0);
+}
+
+seed();

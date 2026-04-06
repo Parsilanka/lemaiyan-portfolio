@@ -49,6 +49,13 @@ export default function Hero() {
                         >
                             Contact Me
                         </Link>
+                        <a
+                            href="/cv.pdf"
+                            download
+                            className="rounded-full border border-primary bg-primary/5 px-8 py-3 font-semibold text-primary transition-transform hover:scale-105 hover:bg-primary/10"
+                        >
+                            Download CV
+                        </a>
                     </div>
                 </motion.div>
             </div>

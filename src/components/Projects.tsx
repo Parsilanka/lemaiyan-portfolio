@@ -21,7 +21,12 @@ export default function Projects() {
 
     useEffect(() => {
         fetch("/api/projects")
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then((data) => {
                 if (Array.isArray(data)) {
                     setProjects(data)
@@ -29,9 +34,14 @@ export default function Projects() {
                     console.error("Projects API returned invalid data:", data)
                     setProjects([])
                 }
-                setLoading(false)
             })
-            .catch(console.error)
+            .catch((err) => {
+                console.error("Error fetching projects:", err);
+                setProjects([])
+            })
+            .finally(() => {
+                setLoading(false)
+            });
     }, [])
 
     const allTags = ["All", ...Array.from(new Set(projects.flatMap(p => p.techStack)))]

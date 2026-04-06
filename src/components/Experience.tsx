@@ -18,7 +18,12 @@ export default function Experience() {
 
     useEffect(() => {
         fetch("/api/experience")
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then((data) => {
                 if (Array.isArray(data)) {
                     setExperiences(data)
@@ -26,9 +31,14 @@ export default function Experience() {
                     console.error("Experience API returned invalid data:", data)
                     setExperiences([])
                 }
-                setLoading(false)
             })
-            .catch(console.error)
+            .catch((err) => {
+                console.error("Error fetching experience:", err);
+                setExperiences([])
+            })
+            .finally(() => {
+                setLoading(false)
+            });
     }, [])
 
     return (
