@@ -12,7 +12,7 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5 }}
-                    className="relative mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full border-4 border-primary/20 sm:h-48 sm:w-48"
+                    className="relative mx-auto mb-8 h-48 w-48 overflow-hidden rounded-full border-4 border-primary/20 sm:h-64 sm:w-64"
                 >
                     <Image
                         src="/images/profile.png"
@@ -28,7 +28,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    <h2 className="mb-2 text-lg font-medium text-muted-foreground uppercase tracking-widest">Parsilanka Samuel Lemaiyan</h2>
+                    <h2 className="mb-2 text-2xl font-bold text-muted-foreground uppercase tracking-widest sm:text-3xl">Parsilanka Samuel Lemaiyan</h2>
                     <h1 className="mb-4 text-5xl font-extrabold tracking-tight sm:text-7xl">
                         Machine Learning Engineer
                     </h1>
